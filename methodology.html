@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en-US">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Roofing Debris Calculator Methodology | Project Yard</title>
+  <meta name="description" content="See the assumptions, formulas, limitations, and US sources used by the Project Yard roofing debris calculator.">
+  <link rel="canonical" href="https://yourdomain.com/methodology.html">
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="./index.html"><span class="brand-mark">PY</span><span>Project Yard</span></a>
+    <nav><a href="./index.html#calculator">Calculator</a><a href="./methodology.html">Methodology</a></nav>
+  </header>
+  <main class="page">
+    <span class="eyebrow">Transparent assumptions</span>
+    <h1>How the roofing debris estimate works</h1>
+    <p>The calculator is a planning tool for US asphalt-shingle tear-offs. It estimates material weight, converts that weight into a loose-volume range, and compares both with general dumpster size and weight ranges.</p>
+
+    <h2>Weight assumptions</h2>
+    <table>
+      <thead><tr><th>Material</th><th>Planning value</th></tr></thead>
+      <tbody>
+        <tr><td>3-tab asphalt shingles</td><td>240 lb per roofing square</td></tr>
+        <tr><td>Architectural asphalt shingles</td><td>420 lb per roofing square</td></tr>
+        <tr><td>Roofing felt/underlayment</td><td>15 lb per roofing square when selected</td></tr>
+      </tbody>
+    </table>
+    <p>One roofing square covers 100 square feet. The shingle values come from GAF's general tear-off guidelines: 2,400 lb per 1,000 sq ft for three-tab shingles and 4,200 lb per 1,000 sq ft for architectural shingles. EPA methodology also uses approximately 250 lb per square as a general asphalt-shingle assumption.</p>
+
+    <h2>Formula</h2>
+    <p><code>roofing squares = roof area in square feet ÷ 100</code></p>
+    <p><code>base weight = squares × shingle weight per square × layers + selected extras</code></p>
+    <p><code>expected weight = base weight × (1 + planning allowance)</code></p>
+    <p>The displayed low/high range applies an additional field-condition range around the expected result. This acknowledges variation in product thickness, nails, flashing, dirt, moisture, and measurement quality.</p>
+
+    <h2>Volume assumptions</h2>
+    <p>Published volume-to-weight conversion factors for loose roofing-shingle debris vary. This calculator uses a range of 0.21–0.37 US tons per cubic yard and an expected value of 0.29 tons per cubic yard. The volume result is less certain than the material-weight result because packing, breakage, and loading practices matter greatly.</p>
+
+    <h2>Dumpster ranges</h2>
+    <p>The calculator compares the high planning estimate with the following general ranges published by GAF. Rental providers may set very different included tonnage, maximum load, prohibited-material, and road-weight rules.</p>
+    <table>
+      <thead><tr><th>Dumpster</th><th>General weight range</th></tr></thead>
+      <tbody>
+        <tr><td>10 yards</td><td>2,000–4,000 lb</td></tr>
+        <tr><td>15 yards</td><td>2,000–4,000 lb</td></tr>
+        <tr><td>20 yards</td><td>4,000–6,000 lb</td></tr>
+        <tr><td>30 yards</td><td>6,000–8,000 lb</td></tr>
+        <tr><td>40 yards</td><td>8,000–10,000 lb</td></tr>
+      </tbody>
+    </table>
+
+    <h2>Limitations</h2>
+    <ul>
+      <li>Do not use the home footprint unless it accurately represents the roof surface area.</li>
+      <li>Tile, slate, metal, built-up roofing, and commercial membrane systems are not supported in version 1.</li>
+      <li>Decking removal is not automatically inferred. Add known extra weight manually.</li>
+      <li>The calculator does not verify local landfill rules, permits, truck limits, or provider-specific contracts.</li>
+      <li>The scale ticket and rental agreement determine the final charge.</li>
+    </ul>
+
+    <h2>Sources</h2>
+    <ul class="source-list">
+      <li><a href="https://www.gaf.com/en-us/blog/residential-roofing/choosing-the-right-sized-roofing-dumpster-for-your-next-project-0864a7d8-6044-4834-b1f1-25231ef866c0">GAF: Choosing the Right-Sized Roofing Dumpster for Your Next Project</a></li>
+      <li><a href="https://www.gaf.com/en-us/blog/your-home/what-is-roofing-felt-42b4e280-7df2-4ace-9916-37734cb9b9c8">GAF: What Is Roofing Felt?</a></li>
+      <li><a href="https://www.epa.gov/sites/production/files/2018-09/documents/construction_and_demolition_debris_generation_in_the_united_states_2015_final.pdf">US EPA: Construction and Demolition Debris Generation in the United States, 2015</a></li>
+      <li><a href="https://www.countyofmonterey.gov/home/showpublisheddocument/141756/639108241524870000">County of Monterey: C&amp;D volume-to-weight conversion factors</a></li>
+      <li><a href="https://extapps.dec.ny.gov/fs/projects/SWMF/Annual%20Reports_Solid%20Waste%20Management%20Facility/Annual%20Reports_by_Activity_Type/CD%20Processor/CD%20Processor%20Annual%20Reports%20-%202023/R4/29W01_Callanan_Pattersonville_Quarry%20_cdp_R4_2023.2024-1-25.AR.pdf">New York DEC facility report: roofing-shingle volume-to-weight factor</a></li>
+    </ul>
+  </main>
+  <footer><span>Project Yard</span><div><a href="./index.html">Calculator</a><a href="./privacy.html">Privacy</a></div><small>Last methodology review: July 2026.</small></footer>
+</body>
+</html>
