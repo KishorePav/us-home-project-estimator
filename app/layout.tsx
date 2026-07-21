@@ -9,4 +9,17 @@ export const metadata: Metadata = {
   twitter:{card:"summary",title:"Home Cost Compass",description:"Free US home project cost calculators with transparent assumptions."},
   icons:{icon:"/favicon.svg"},
 };
-export default function RootLayout({children}:{children:React.ReactNode}){return <html lang="en-US"><body>{children}</body></html>}
+export default function RootLayout({children}:{children:React.ReactNode}){
+  return (
+    <html lang="en-US">
+      <head>
+        <script
+          async
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4845857220797420"
+          crossOrigin="anonymous"
+        />
+      </head>
+      <body>{children}</body>
+    </html>
+  );
+}
