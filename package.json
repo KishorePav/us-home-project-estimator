@@ -1,5 +1,5 @@
 {
-  "name": "us-home-project-estimator",
+  "name": "home-cost-compass",
   "version": "0.1.0",
   "private": true,
   "engines": {
@@ -40,5 +40,5 @@
     "wrangler": "4.92.0"
   },
   "type": "module",
-  "displayName": "US Home Project Estimator"
+  "displayName": "Home Cost Compass"
 }
