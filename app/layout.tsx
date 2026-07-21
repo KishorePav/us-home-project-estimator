@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
+import Script from "next/script";
 import "./globals.css";
+const analyticsId = "G-HRSE4676EK";
 export const metadata: Metadata = {
   metadataBase: new URL("https://homecostcompass.com"),
   title: {default:"Home Cost Compass | Free US Home Project Cost Calculators",template:"%s | Home Cost Compass"},
@@ -19,7 +21,19 @@ export default function RootLayout({children}:{children:React.ReactNode}){
           crossOrigin="anonymous"
         />
       </head>
-      <body>{children}</body>
+      <body>
+        {children}
+        <Script
+          src={`https://www.googletagmanager.com/gtag/js?id=${analyticsId}`}
+          strategy="afterInteractive"
+        />
+        <Script id="google-analytics" strategy="afterInteractive">
+          {`window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', '${analyticsId}', { anonymize_ip: true });`}
+        </Script>
+      </body>
     </html>
   );
 }
