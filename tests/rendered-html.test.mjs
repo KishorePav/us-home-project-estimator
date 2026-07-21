@@ -31,4 +31,15 @@ test("renders production brand and canonical metadata", async () => {
   assert.match(html, /rel="canonical" href="https:\/\/homecostcompass\.com\/"/);
   assert.match(html, />Home Cost Compass</);
   assert.doesNotMatch(html, /Project Yard/i);
+  assert.match(html, /ca-pub-4845857220797420/);
+});
+
+test("declares the authorized AdSense seller", async () => {
+  const adsTxt = await import("node:fs/promises").then(({ readFile }) =>
+    readFile(new URL("../public/ads.txt", import.meta.url), "utf8"),
+  );
+  assert.equal(
+    adsTxt.trim(),
+    "google.com, pub-4845857220797420, DIRECT, f08c47fec0942fa0",
+  );
 });
