@@ -11,7 +11,7 @@ const money = new Intl.NumberFormat("en-US", { style: "currency", currency: "USD
 const initial = { areaUnit: "sqft", area: 2000, shingleType: "architectural", layers: 1, includeUnderlayment: true, wastePercent: 5, extraDebrisLb: 0, quoteDumpsterYards: 20, includedTons: 3, rentalPrice: 450, overagePerTon: 100 };
 
 function Header() {
-  return <header className="site-header"><Link className="brand" href="/"><span className="brand-mark">PY</span><span>Project Yard</span></Link><nav aria-label="Main navigation"><a href="#calculator">Calculator</a><Link href="/methodology">Methodology</Link></nav></header>;
+  return <header className="site-header"><Link className="brand" href="/"><span className="brand-mark">HC</span><span>Home Cost Compass</span></Link><nav aria-label="Main navigation"><a href="#calculator">Calculator</a><Link href="/methodology">Methodology</Link><Link href="/about">About</Link></nav></header>;
 }
 function Meter({ label, value }: { label: string; value: number }) {
   const state = value > 100 ? "danger" : value > 85 ? "warning" : "safe";
@@ -54,6 +54,6 @@ export default function Home() {
       </section>
       <section className="content-section"><div><span className="eyebrow">How to use the result</span><h2>Call the rental company with the weight estimate—not only the dumpster size.</h2></div><div className="content-columns"><p>A container can have enough physical space but an insufficient included-weight allowance. Tell the provider that the load contains roofing shingles and confirm which mixed materials are accepted.</p><p>This calculator provides a planning range, not a guaranteed scale-ticket weight. Product thickness, moisture, extra layers, attached material, and packing change the final load.</p></div></section>
     </main>
-    <footer><span>Project Yard</span><div><Link href="/methodology">Methodology</Link><Link href="/privacy">Privacy</Link></div><small>Planning estimates only. Confirm limits and accepted materials with the rental provider.</small></footer>
+    <footer><span>Home Cost Compass</span><div><Link href="/about">About</Link><Link href="/methodology">Methodology</Link><Link href="/privacy">Privacy</Link><Link href="/terms">Terms</Link></div><small>Planning estimates only. Confirm limits and accepted materials with the rental provider.</small></footer>
   </>;
 }
