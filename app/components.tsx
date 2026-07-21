@@ -1,0 +1,3 @@
+import Link from "next/link";
+export function Header(){return <header className="site-header"><Link className="brand" href="/"><span className="brand-mark">PY</span><span>Project Yard</span></Link><nav aria-label="Main navigation"><Link href="/#calculators">Calculators</Link><Link href="/roofing-debris">Dumpster planner</Link><Link href="/methodology">Methodology</Link></nav></header>}
+export function Footer(){return <footer><span>Project Yard</span><div><Link href="/methodology">Methodology</Link><Link href="/privacy">Privacy</Link></div><small>Independent planning estimates. Always verify scope and pricing with licensed local professionals.</small></footer>}
