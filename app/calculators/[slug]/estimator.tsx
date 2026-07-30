@@ -5,10 +5,26 @@ import type {Project} from "../../project-data";
 import {complexityFactors,estimate,locationFactors,qualityFactors} from "../../project-data";
 
 const money=new Intl.NumberFormat("en-US",{style:"currency",currency:"USD",maximumFractionDigits:0});
+const cleanNumericInput=(value:string)=>{
+ const cleaned=value.replace(/,/g,"").replace(/[^\d.]/g,"");
+ const [whole="",...fraction]=cleaned.split(".");
+ return fraction.length?`${whole||"0"}.${fraction.join("")}`:whole;
+};
+const numberFromInput=(value:string,fallback:number)=>{
+ if(!value.trim())return fallback;
+ const parsed=Number(value);
+ return Number.isFinite(parsed)?parsed:fallback;
+};
+const clamp=(value:number,min:number,max:number)=>Math.min(max,Math.max(min,value));
+
 export function Estimator({project}:{project:Project}){
- const [size,setSize]=useState(project.defaultSize),[location,setLocation]=useState("US average"),[quality,setQuality]=useState("Standard"),[complexity,setComplexity]=useState("Typical"),[contingency,setContingency]=useState(10);
+ const [sizeInput,setSizeInput]=useState(String(project.defaultSize));
+ const [location,setLocation]=useState("US average"),[quality,setQuality]=useState("Standard"),[complexity,setComplexity]=useState("Typical");
+ const [contingencyInput,setContingencyInput]=useState("10");
  const [quotes,setQuotes]=useState([{name:"Contractor A",amount:0},{name:"Contractor B",amount:0},{name:"Contractor C",amount:0}]);
  const started=useRef(false),customized=useRef(false),quoted=useRef(new Set<number>());
+ const size=Math.max(1,numberFromInput(sizeInput,project.defaultSize));
+ const contingency=clamp(numberFromInput(contingencyInput,10),0,30);
  const result=useMemo(()=>estimate(project,size,location,quality,complexity,contingency),[project,size,location,quality,complexity,contingency]);
  const markStarted=()=>{if(started.current)return;started.current=true;trackEvent("calculator_started",{calculator_slug:project.slug,calculator_name:project.title})};
  const setQuote=(index:number,key:"name"|"amount",value:string|number)=>{
@@ -33,9 +49,9 @@ export function Estimator({project}:{project:Project}){
   window.setTimeout(()=>window.print(),150);
  };
  return <section className="estimator-shell"><div className="estimate-form"><div className="form-intro"><span className="step">01</span><div><h2>Describe the project</h2><p>Use approximate measurements for early planning. You can print a revised estimate later.</p></div></div>
-  <label className="field"><span>Project size</span><div className="input-suffix"><input aria-label="Project size" type="number" min="1" value={size} onChange={e=>{markStarted();setSize(Number(e.target.value))}}/><span>{project.unit}</span></div></label>
+  <label className="field"><span>Project size</span><div className="input-suffix"><input aria-label="Project size" type="text" inputMode="decimal" autoComplete="off" value={sizeInput} onFocus={e=>e.currentTarget.select()} onChange={e=>{markStarted();setSizeInput(cleanNumericInput(e.target.value))}} onBlur={()=>setSizeInput(String(Math.max(1,numberFromInput(sizeInput,project.defaultSize))))}/><span>{project.unit}</span></div></label>
   <div className="field-row split"><label className="field"><span>Local cost level</span><select value={location} onChange={e=>{markStarted();setLocation(e.target.value)}}>{Object.keys(locationFactors).map(v=><option key={v}>{v}</option>)}</select><small>Use metro pricing when labor and overhead are significantly above average.</small></label><label className="field"><span>Finish level</span><select value={quality} onChange={e=>{markStarted();setQuality(e.target.value)}}>{Object.keys(qualityFactors).map(v=><option key={v}>{v}</option>)}</select></label></div>
-  <div className="field-row split"><label className="field"><span>Project complexity</span><select value={complexity} onChange={e=>{markStarted();setComplexity(e.target.value)}}>{Object.keys(complexityFactors).map(v=><option key={v}>{v}</option>)}</select></label><label className="field"><span>Planning contingency</span><div className="input-suffix"><input type="number" min="0" max="30" value={contingency} onChange={e=>{markStarted();setContingency(Number(e.target.value))}}/><span>%</span></div></label></div>
+  <div className="field-row split"><label className="field"><span>Project complexity</span><select value={complexity} onChange={e=>{markStarted();setComplexity(e.target.value)}}>{Object.keys(complexityFactors).map(v=><option key={v}>{v}</option>)}</select></label><label className="field"><span>Planning contingency</span><div className="input-suffix"><input aria-label="Planning contingency percentage" type="text" inputMode="decimal" autoComplete="off" value={contingencyInput} onFocus={e=>e.currentTarget.select()} onChange={e=>{markStarted();setContingencyInput(cleanNumericInput(e.target.value))}} onBlur={()=>setContingencyInput(String(clamp(numberFromInput(contingencyInput,10),0,30)))}/><span>%</span></div></label></div>
   <div className="assumption-box"><strong>What this estimate assumes</strong><ul>{project.notes.map(note=><li key={note}>{note}</li>)}</ul></div>
  </div><aside className="estimate-results" aria-live="polite"><header className="print-report-header"><div className="print-brand"><span className="print-brand-mark">HC</span><div><strong>HOME COST COMPASS</strong><small>HOME PROJECT ESTIMATE</small></div></div><div className="print-meta"><span>PLANNING REPORT</span><strong>Updated July 2026</strong></div></header><section className="print-project-summary"><div><span>PROJECT</span><strong>{project.title}</strong></div><div><span>SIZE</span><strong>{size.toLocaleString("en-US")} {project.unit}</strong></div><div><span>MARKET</span><strong>{location}</strong></div><div><span>SPECIFICATION</span><strong>{quality} · {complexity}</strong></div></section><div className="result-top"><div><span className="eyebrow">Your planning range</span><h2>{money.format(result.low)}–{money.format(result.high)}</h2><p>Typical planning point: <strong>{money.format(result.typical)}</strong></p></div><button className="print-button" onClick={printReport}>Print / Save PDF</button></div>
   <div className="range-visual"><span style={{width:"34%"}}/><i/><b/></div><div className="range-labels"><span><small>Low</small>{money.format(result.low)}</span><span><small>Typical</small>{money.format(result.typical)}</span><span><small>High</small>{money.format(result.high)}</span></div>
