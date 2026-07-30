@@ -45,8 +45,11 @@ export function Estimator({project}:{project:Project}){
  },[project.slug,size,location,quality,complexity,contingency]);
  const printReport=()=>{
   trackEvent("estimate_report_printed",{calculator_slug:project.slug,calculator_name:project.title,quotes_added:quotes.filter(q=>q.amount>0).length,estimate_customized:customized.current});
-  trackEvent("calculator_completed",{calculator_slug:project.slug,completion_method:"print_or_pdf"});
-  window.setTimeout(()=>window.print(),150);
+  trackEvent(
+   "calculator_completed",
+   {calculator_slug:project.slug,completion_method:"print_or_pdf"},
+   {onSent:()=>window.print(),timeoutMs:1500},
+  );
  };
  return <section className="estimator-shell"><div className="estimate-form"><div className="form-intro"><span className="step">01</span><div><h2>Describe the project</h2><p>Use approximate measurements for early planning. You can print a revised estimate later.</p></div></div>
   <label className="field"><span>Project size</span><div className="input-suffix"><input aria-label="Project size" type="text" inputMode="decimal" autoComplete="off" value={sizeInput} onFocus={e=>e.currentTarget.select()} onChange={e=>{markStarted();setSizeInput(cleanNumericInput(e.target.value))}} onBlur={()=>setSizeInput(String(Math.max(1,numberFromInput(sizeInput,project.defaultSize))))}/><span>{project.unit}</span></div></label>
