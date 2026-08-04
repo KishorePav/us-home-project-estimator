@@ -1,8 +1,9 @@
 import type {MetadataRoute} from "next";
+import {costGuides} from "./guides/guide-data";
 import {projects} from "./project-data";
 
 const baseUrl = "https://homecostcompass.com";
-const contentUpdated = new Date("2026-07-30T00:00:00.000Z");
+const contentUpdated = new Date("2026-08-05T00:00:00.000Z");
 
 const staticRoutes: Array<{
   path: string;
@@ -10,6 +11,7 @@ const staticRoutes: Array<{
   priority: number;
 }> = [
   {path: "", changeFrequency: "weekly", priority: 1},
+  {path: "/guides", changeFrequency: "weekly", priority: 0.9},
   {path: "/about", changeFrequency: "monthly", priority: 0.6},
   {path: "/methodology", changeFrequency: "monthly", priority: 0.7},
   {path: "/privacy", changeFrequency: "monthly", priority: 0.4},
@@ -32,5 +34,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.8,
   }));
 
-  return [...pages, ...calculatorPages];
+  const guidePages: MetadataRoute.Sitemap = costGuides.map((guide) => ({
+    url: `${baseUrl}/guides/${guide.slug}`,
+    lastModified: new Date(`${guide.updatedAt}T00:00:00.000Z`),
+    changeFrequency: "monthly",
+    priority: 0.75,
+  }));
+
+  return [...pages, ...calculatorPages, ...guidePages];
 }
