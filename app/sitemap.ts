@@ -1,5 +1,6 @@
 import type {MetadataRoute} from "next";
 import {costGuides} from "./guides/guide-data";
+import {topicGuides} from "./guides/topic-data";
 import {projects} from "./project-data";
 
 const baseUrl = "https://homecostcompass.com";
@@ -41,5 +42,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.75,
   }));
 
-  return [...pages, ...calculatorPages, ...guidePages];
+  const topicGuidePages: MetadataRoute.Sitemap = topicGuides.map((guide) => ({
+    url: `${baseUrl}/guides/topics/${guide.slug}`,
+    lastModified: contentUpdated,
+    changeFrequency: "monthly",
+    priority: 0.7,
+  }));
+
+  return [...pages, ...calculatorPages, ...guidePages, ...topicGuidePages];
 }
