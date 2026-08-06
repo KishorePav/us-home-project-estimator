@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <rect width="1200" height="630" rx="36" fill="#f7f4ee"/>
+  <rect x="72" y="72" width="1056" height="486" rx="28" fill="#ffffff" stroke="#d8d3c9" stroke-width="4"/>
+  <rect x="120" y="130" width="88" height="88" rx="20" fill="#23483d"/>
+  <path d="M142 182l22-22 22 22v22h-44z" fill="#ffffff"/>
+  <text x="242" y="175" font-family="Arial,Helvetica,sans-serif" font-size="58" font-weight="700" fill="#1f2c28">Home Cost Compass</text>
+  <text x="120" y="292" font-family="Arial,Helvetica,sans-serif" font-size="42" font-weight="700" fill="#1f2c28">Plan home projects with clearer cost ranges.</text>
+  <text x="120" y="362" font-family="Arial,Helvetica,sans-serif" font-size="30" fill="#52605b">Free US calculators · transparent assumptions · practical cost guides</text>
+  <text x="120" y="455" font-family="Arial,Helvetica,sans-serif" font-size="28" fill="#23483d">homecostcompass.com</text>
+</svg>
