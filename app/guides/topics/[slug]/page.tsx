@@ -6,6 +6,7 @@ import {projects} from "../../../project-data";
 import {topicGuideMap,topicGuides,topicGuidePublishedAt} from "../../topic-data";
 
 const baseUrl="https://homecostcompass.com";
+const socialImage=`${baseUrl}/og-image.svg`;
 
 export function generateStaticParams(){return topicGuides.map((guide)=>({slug:guide.slug}));}
 
@@ -13,7 +14,14 @@ export async function generateMetadata({params}:{params:Promise<{slug:string}>})
   const {slug}=await params;
   const guide=topicGuideMap.get(slug);
   if(!guide) return {};
-  return {title:guide.title,description:guide.description,alternates:{canonical:`/guides/topics/${guide.slug}`},openGraph:{type:"article",url:`${baseUrl}/guides/topics/${guide.slug}`,title:guide.title,description:guide.description,publishedTime:topicGuidePublishedAt,modifiedTime:topicGuidePublishedAt}};
+  const pageUrl=`${baseUrl}/guides/topics/${guide.slug}`;
+  return {
+    title:guide.title,
+    description:guide.description,
+    alternates:{canonical:`/guides/topics/${guide.slug}`},
+    openGraph:{type:"article",siteName:"Home Cost Compass",url:pageUrl,title:guide.title,description:guide.description,publishedTime:topicGuidePublishedAt,modifiedTime:topicGuidePublishedAt,images:[{url:socialImage,width:1200,height:630,alt:guide.title}]},
+    twitter:{card:"summary_large_image",title:guide.title,description:guide.description,images:[socialImage]},
+  };
 }
 
 export default async function TopicGuidePage({params}:{params:Promise<{slug:string}>}){
