@@ -1,17 +1,45 @@
 import type { Metadata } from "next";
 import Script from "next/script";
 import "./globals.css";
+
 const analyticsId = "G-HRSE4676EK";
+const siteUrl = "https://homecostcompass.com";
+const socialImage = `${siteUrl}/og-image.svg`;
+
 export const metadata: Metadata = {
-  metadataBase: new URL("https://homecostcompass.com"),
-  title: {default:"Home Cost Compass | Free US Home Project Cost Calculators",template:"%s | Home Cost Compass"},
-  description:"Plan US home projects with free cost calculators, transparent assumptions, realistic budget ranges, and printable quote-comparison reports.",
-  alternates:{canonical:"/"},
-  openGraph:{type:"website",siteName:"Home Cost Compass",url:"https://homecostcompass.com",title:"Home Cost Compass",description:"Free, transparent US home project cost calculators and planning tools."},
-  twitter:{card:"summary",title:"Home Cost Compass",description:"Free US home project cost calculators with transparent assumptions."},
-  icons:{icon:"/favicon.svg"},
+  metadataBase: new URL(siteUrl),
+  title: {
+    default: "Home Cost Compass | Free US Home Project Cost Calculators",
+    template: "%s | Home Cost Compass",
+  },
+  description:
+    "Plan US home projects with free cost calculators, transparent assumptions, realistic budget ranges, and printable quote-comparison reports.",
+  alternates: { canonical: "/" },
+  openGraph: {
+    type: "website",
+    siteName: "Home Cost Compass",
+    url: siteUrl,
+    title: "Home Cost Compass",
+    description: "Free, transparent US home project cost calculators and planning tools.",
+    images: [
+      {
+        url: socialImage,
+        width: 1200,
+        height: 630,
+        alt: "Home Cost Compass home project cost calculators",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Home Cost Compass",
+    description: "Free US home project cost calculators with transparent assumptions.",
+    images: [socialImage],
+  },
+  icons: { icon: "/favicon.svg" },
 };
-export default function RootLayout({children}:{children:React.ReactNode}){
+
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en-US">
       <head>

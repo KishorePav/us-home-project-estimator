@@ -4,8 +4,10 @@ import {notFound} from "next/navigation";
 import {Footer, Header} from "../../components";
 import {projects} from "../../project-data";
 import {costGuideMap, costGuides, getGuideDetails} from "../guide-data";
+import {topicGuides} from "../topic-data";
 
 const baseUrl="https://homecostcompass.com";
+const socialImage=`${baseUrl}/og-image.svg`;
 
 export function generateStaticParams(){return costGuides.map((guide)=>({slug:guide.slug}));}
 
@@ -13,11 +15,13 @@ export async function generateMetadata({params}:{params:Promise<{slug:string}>})
   const {slug}=await params;
   const guide=costGuideMap.get(slug);
   if(!guide) return {};
+  const pageUrl=`${baseUrl}/guides/${guide.slug}`;
   return {
     title: guide.title,
     description: guide.description,
     alternates:{canonical:`/guides/${guide.slug}`},
-    openGraph:{type:"article",url:`${baseUrl}/guides/${guide.slug}`,title:guide.title,description:guide.description,publishedTime:guide.publishedAt,modifiedTime:guide.updatedAt},
+    openGraph:{type:"article",siteName:"Home Cost Compass",url:pageUrl,title:guide.title,description:guide.description,publishedTime:guide.publishedAt,modifiedTime:guide.updatedAt,images:[{url:socialImage,width:1200,height:630,alt:guide.title}]},
+    twitter:{card:"summary_large_image",title:guide.title,description:guide.description,images:[socialImage]},
   };
 }
 
@@ -29,6 +33,7 @@ export default async function CostGuidePage({params}:{params:Promise<{slug:strin
   if(!details) notFound();
   const {project,guide}=details;
   const related=guide.related.map((relatedSlug)=>projects.find((item)=>item.slug===relatedSlug)).filter((item)=>item!==undefined);
+  const focusedGuides=topicGuides.filter((item)=>item.projectSlug===project.slug);
   const pageUrl=`${baseUrl}/guides/${costGuide.slug}`;
   const calculatorUrl=`${baseUrl}/calculators/${project.slug}`;
   const faqs=[
@@ -89,6 +94,11 @@ export default async function CostGuidePage({params}:{params:Promise<{slug:strin
         </ol>
         <p><Link href={`/calculators/${project.slug}`}>Open the {project.title} calculator</Link> to test different size, quality and complexity assumptions.</p>
       </section>
+
+      {focusedGuides.length>0&&<section className="calculator-section">
+        <div className="section-heading"><p className="eyebrow">Go deeper</p><h2>Focused {project.short.toLowerCase()} cost guides</h2></div>
+        <div className="calculator-grid">{focusedGuides.map((item)=><Link className="calculator-card" href={`/guides/topics/${item.slug}`} key={item.slug}><span className="calculator-icon">{project.icon}</span><div><h3>{item.title}</h3><p>{item.description}</p></div></Link>)}</div>
+      </section>}
 
       <section className="content-section">
         <div className="section-heading"><p className="eyebrow">Common questions</p><h2>{project.title} cost FAQ</h2></div>

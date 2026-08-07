@@ -5,10 +5,17 @@ import {categories, projects} from "../project-data";
 import {costGuides, getGuideDetails} from "./guide-data";
 import {topicGuides} from "./topic-data";
 
+const siteUrl="https://homecostcompass.com";
+const pageUrl=`${siteUrl}/guides`;
+const socialImage=`${siteUrl}/og-image.svg`;
+const description="Practical US home improvement cost guides covering labor, materials, permits, budget drivers, hidden expenses and quote-planning decisions.";
+
 export const metadata: Metadata = {
   title: "Home Improvement Cost Guides",
-  description: "Practical US home improvement cost guides covering labor, materials, permits, budget drivers and hidden expenses.",
+  description,
   alternates: {canonical: "/guides"},
+  openGraph:{type:"website",siteName:"Home Cost Compass",url:pageUrl,title:"Home Improvement Cost Guides",description,images:[{url:socialImage,width:1200,height:630,alt:"Home Cost Compass cost guides"}]},
+  twitter:{card:"summary_large_image",title:"Home Improvement Cost Guides",description,images:[socialImage]},
 };
 
 export default function GuidesPage(){

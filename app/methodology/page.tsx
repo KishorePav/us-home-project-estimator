@@ -1,3 +1,17 @@
+import type {Metadata} from "next";
 import {Footer,Header} from "../components";
-export const metadata={title:"Methodology",description:"Assumptions, formulas, limitations, and sources used by Home Cost Compass.",alternates:{canonical:"/methodology"}};
+
+const siteUrl="https://homecostcompass.com";
+const pageUrl=`${siteUrl}/methodology`;
+const socialImage=`${siteUrl}/og-image.svg`;
+const description="See the assumptions, formulas, planning ranges, sources and limitations behind Home Cost Compass calculators for US home improvement projects.";
+
+export const metadata:Metadata={
+  title:"Methodology",
+  description,
+  alternates:{canonical:"/methodology"},
+  openGraph:{type:"website",siteName:"Home Cost Compass",url:pageUrl,title:"Home Cost Compass Methodology",description,images:[{url:socialImage,width:1200,height:630,alt:"Home Cost Compass methodology"}]},
+  twitter:{card:"summary_large_image",title:"Home Cost Compass Methodology",description,images:[socialImage]},
+};
+
 export default function Methodology(){return <><Header/><main className="page"><span className="eyebrow">Transparent assumptions</span><h1>How Home Cost Compass estimates work</h1><p>Our general project calculators turn an approximate project size into a low-to-high planning range, then adjust that range for market cost level, finish level, complexity, and the contingency you select. The midpoint is a planning reference—not a predicted contractor bid.</p><h2>General cost calculator formula</h2><p><code>planning range = project size × project rate × market × finish × complexity × contingency</code></p><p>Material, labor, permit, and contingency values are planning allocations intended to make quote conversations easier. Actual scopes and contractor pricing methods vary.</p><h2>Roofing debris methodology</h2><p>The specialist roofing tool estimates material weight, converts it into a loose-volume range, and compares both with general dumpster size and weight ranges.</p><table><thead><tr><th>Material</th><th>Planning value</th></tr></thead><tbody><tr><td>3-tab asphalt shingles</td><td>240 lb per roofing square</td></tr><tr><td>Architectural asphalt shingles</td><td>420 lb per roofing square</td></tr><tr><td>Roofing felt/underlayment</td><td>15 lb per roofing square when selected</td></tr></tbody></table><p>One roofing square covers 100 square feet. The shingle values follow GAF&apos;s general tear-off guidance.</p><h2>Roofing formula</h2><p><code>roofing squares = roof area in square feet ÷ 100</code></p><p><code>base weight = squares × shingle weight per square × layers + selected extras</code></p><p><code>expected weight = base weight × (1 + planning allowance)</code></p><h2>Limitations</h2><ul><li>Use actual project measurements where possible.</li><li>Local labor, access, materials, permits, and hidden conditions can materially change cost.</li><li>Tile, slate, metal, built-up roofing, and commercial membrane systems are not supported by the debris tool.</li><li>Local codes, landfill rules, permits, truck limits, and rental contracts override these estimates.</li></ul><h2>Sources</h2><ul className="source-list"><li><a href="https://www.gaf.com/en-us/blog/residential-roofing/choosing-the-right-sized-roofing-dumpster-for-your-next-project-0864a7d8-6044-4834-b1f1-25231ef866c0">GAF: Choosing the Right-Sized Roofing Dumpster</a></li><li><a href="https://www.epa.gov/sites/production/files/2018-09/documents/construction_and_demolition_debris_generation_in_the_united_states_2015_final.pdf">US EPA: Construction and Demolition Debris Generation</a></li></ul><p><small>Last methodology review: July 2026.</small></p></main><Footer/></>}
